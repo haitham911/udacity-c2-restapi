@@ -31,7 +31,6 @@ function generateJWT(user: User): string {
 }
 
 export function requireAuth(req: Request, res: Response, next: NextFunction) {
-    console.warn("auth.router not yet implemented, you'll cover this in lesson 5")
      if (!req.headers || !req.headers.authorization){
          return res.status(401).send({ message: 'No authorization headers.' });
      }
@@ -44,7 +43,7 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
     
      const token = token_bearer[1];
 
-     return jwt.verify(token, "hello", (err, decoded) => {
+     return jwt.verify(token, config.jwt.secret, (err, decoded) => {
        if (err) {
          return res.status(500).send({ auth: false, message: 'Failed to authenticate.' });
        }
